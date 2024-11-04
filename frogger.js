@@ -20,7 +20,6 @@ class Frogger {
       return
     }
 
-    console.log("dims", this.x, this.y, canvas1.height)
     if (keys[38]) { // up
       this.y -= grid;
       this.moving = true
@@ -39,6 +38,10 @@ class Frogger {
         this.x += grid
         this.moving = true
       }
+    }
+
+    if (this.y < 0) {
+      scored()
     }
   }
 
