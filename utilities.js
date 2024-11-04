@@ -2,6 +2,7 @@ function animate() {
   ctx3.clearRect(0, 0, canvas1.width, canvas1.height)
   frogger.draw()
   frogger.update()
+  handleObstacles()
   requestAnimationFrame(animate)
 }
 
