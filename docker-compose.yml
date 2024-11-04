@@ -1,0 +1,11 @@
+services:
+  ny-frogger:
+    container_name: ny-frogger
+    ports:
+      - 8000:80
+    build:
+      context: .
+    develop:
+      watch:
+        - path: .
+          action: rebuild
