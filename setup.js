@@ -29,6 +29,8 @@ var maxParticles = 300
 var ripplesArray = []
 var carsArray = []
 var logsArray = []
+var numberOfCars = 3
+var safe = false
 
 const background_lvl2 = new Image()
 background_lvl2.src = 'background_lvl2.png'
@@ -37,7 +39,20 @@ const grass = new Image()
 background_lvl2.src = 'grass.png'
 
 const collision = new Image()
-background_lvl2.src = 'collisions.png'
+collision.src = 'collisions.png'
+
+const turtle = new Image()
+turtle.src = 'turtles.png'
+
+const car = new Image()
+car.src = 'cars.png'
+
+const log = new Image()
+log.src = 'log.png'
+
+const froggerSprite = new Image()
+froggerSprite.src = 'frog_spritesheet.png'
+
 
 class KeyboardHandler {
   constructor() {

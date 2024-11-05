@@ -16,6 +16,7 @@ function animate() {
   Obstacle.handleObstacles()
   handleScoreboard()
   ctx4.drawImage(grass, 0, 0, canvas1.width, canvas1.height)
+  frame++
   requestAnimationFrame(animate)
 }
 
@@ -32,6 +33,7 @@ window.addEventListener('keydown', function (e) {
 window.addEventListener('keyup', function (e) {
   delete keys[e.keyCode]
   frogger.moving = false
+  frogger.frameX = 0
 })
 
 function scored() {
@@ -55,7 +57,7 @@ function handleScoreboard() {
 
 function collidesWith(first) {
   return function $collidesWith(second) {
-    return !(first.x > second.x + second.width || first.x + first.x < second.x || first.y > second.y + second.height || first.y + first.height < second.y)
+    return !(first.x > second.x + second.width || first.x + first.width < second.x || first.y > second.y + second.height || first.y + first.height < second.y)
   }
 }
 
