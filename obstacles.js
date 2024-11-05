@@ -30,59 +30,62 @@ class Obstacle {
     }
     return previousX
   }
+  static initObstacles() {
+    // lane 1 
+    for (let i = 0; i < 2; i++) {
+      carsArray.push(new Obstacle({
+        x: i * 350,
+        y: canvas1.height - grid * 2 - 20,
+      }))
+    }
+
+    for (let i = 0; i < 2; i++) {
+      carsArray.push(new Obstacle({
+        x: i * 300,
+        y: canvas1.height - grid * 3 - 20,
+        speed: -2
+      }))
+    }
+
+    for (let i = 0; i < 2; i++) {
+      carsArray.push(new Obstacle({
+        x: i * 400,
+        y: canvas1.height - grid * 4 - 20,
+        speed: 2
+      }))
+    }
+
+    for (let i = 0; i < 2; i++) {
+      logsArray.push(new Obstacle({
+        x: i * 400,
+        y: canvas1.height - grid * 5 - 20,
+        speed: -2,
+        type: 'log'
+      }))
+    }
+
+    for (let i = 0; i < 3; i++) {
+      logsArray.push(new Obstacle({
+        x: i * 200,
+        y: canvas1.height - grid * 6 - 20,
+        width: grid,
+        speed: 1,
+        type: 'turtle'
+      }))
+    }
+  }
+  static handleObstacles() {
+    carsArray.forEach(car => {
+      car.draw(car.update())
+    })
+    logsArray.forEach(log => {
+      log.draw(log.update())
+    })
+    if (carsArray.some(collidesWith(frogger))) {
+      ctx4.drawImage(collisions, 0, 100, 100, 100, frogger.x, frogger.y, 50, 50)
+      resetGame()
+    }
+  }
 }
 
-function initObstacles() {
-  // lane 1 
-  for (let i = 0; i < 2; i++) {
-    carsArray.push(new Obstacle({
-      x: i * 350,
-      y: canvas1.height - grid * 2 - 20,
-    }))
-  }
-
-  for (let i = 0; i < 2; i++) {
-    carsArray.push(new Obstacle({
-      x: i * 300,
-      y: canvas1.height - grid * 3 - 20,
-      speed: -2
-    }))
-  }
-
-  for (let i = 0; i < 2; i++) {
-    carsArray.push(new Obstacle({
-      x: i * 400,
-      y: canvas1.height - grid * 4 - 20,
-      speed: 2
-    }))
-  }
-
-  for (let i = 0; i < 2; i++) {
-    logsArray.push(new Obstacle({
-      x: i * 400,
-      y: canvas1.height - grid * 5 - 20,
-      speed: -2,
-      type: 'log'
-    }))
-  }
-
-  for (let i = 0; i < 3; i++) {
-    logsArray.push(new Obstacle({
-      x: i * 200,
-      y: canvas1.height - grid * 6 - 20,
-      width: grid,
-      speed: 1,
-      type: 'turtle'
-    }))
-  }
-}
-initObstacles()
-
-function handleObstacles() {
-  carsArray.forEach(car => {
-    car.draw(car.update())
-  })
-  logsArray.forEach(log => {
-    log.draw(log.update())
-  })
-}
+Obstacle.initObstacles()

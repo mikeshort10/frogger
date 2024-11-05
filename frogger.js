@@ -16,27 +16,25 @@ class Frogger {
   update() {
     console.log("update")
 
-    if (this.moving) {
+    if (this.moving || KeyboardHandler.isKeyboardKey() === false) {
       return
     }
 
-    if (keys[38]) { // up
-      this.y -= grid;
-      this.moving = true
-    } else if (keys[40]) { // down
+    this.moving = true
+
+    if (KeyboardHandler.isUpKey()) {
+      this.y -= grid
+    } else if (KeyboardHandler.isDownKey()) {
       if (this.y < canvas1.height - this.height * 2) {
         this.y += grid
-        this.moving = true
       }
-    } else if (keys[37]) { // left
+    } else if (KeyboardHandler.isLeftKey()) {
       if (this.x > this.width) {
         this.x -= grid
-        this.moving = true
       }
-    } else if (keys[39]) { // down
+    } else if (KeyboardHandler.isRightKey()) {
       if (this.x < canvas1.width - this.width * 2) {
         this.x += grid
-        this.moving = true
       }
     }
 
@@ -52,6 +50,14 @@ class Frogger {
 
   jump() {
     console.log("jump")
+  }
+
+  isOnStreet() {
+    return this.y > 250
+  }
+
+  isOnSidewalk() {
+    return this.isOnStreet() !== true && this.y > 100
   }
 }
 
