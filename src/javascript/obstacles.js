@@ -28,7 +28,6 @@ class Obstacle {
         return Obstacle.getVehicle()
       case "exec":
         const execType = Obstacle.getExec()
-        console.log(execType)
         return execType
       default:
         return type
@@ -43,7 +42,6 @@ class Obstacle {
       const image = this.frameX === 0 ? cab : cab_reverse
       ctx2.drawImage(image, this.x, this.y, this.width, this.height)
     } else if (this.type.startsWith('exec')) {
-      console.log(execImages[this.type])
       ctx2.drawImage(execImages[this.type], this.x, this.y, this.width, this.height)
     }
   }
@@ -121,7 +119,7 @@ class Obstacle {
         totalObstacles: 3,
         xSpacing: 200,
         heightBuffer: 9,
-        speed: 1,
+        speed: 2,
         type: 'exec',
         width: 25,
         height: 25,

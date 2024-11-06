@@ -60,9 +60,22 @@ function collidesWith(first) {
   }
 }
 
+function showCallToAction() {
+  document.getElementById("game-over").style.display = "initial"
+}
+
+function hideCallToAction() {
+  hiddenCallToAction = true
+  document.getElementById("game-over").style.display = "none"
+}
+
 function resetGame() {
   frogger.reset()
   score = 0
   collisionsCount++
   gameSpeed = 1
+  console.log(hiddenCallToAction)
+  if (hiddenCallToAction === false) {
+    showCallToAction()
+  }
 }

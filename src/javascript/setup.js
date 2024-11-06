@@ -31,6 +31,7 @@ var carsArray = []
 var logsArray = []
 var numberOfCars = 3
 var safe = false
+var hiddenCallToAction = false
 
 function createImage(filename) {
   const image = new Image()
@@ -91,3 +92,4 @@ class KeyboardHandler {
     return KeyboardHandler.isRightKey() || KeyboardHandler.isLeftKey() || KeyboardHandler.isUpKey() || KeyboardHandler.isDownKey()
   }
 }
+
