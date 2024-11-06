@@ -116,7 +116,7 @@ class Obstacle {
         height: 25,
       },
       {
-        totalObstacles: 3,
+        totalObstacles: 2,
         xSpacing: 200,
         heightBuffer: 9,
         speed: 2,
