@@ -17,7 +17,7 @@ const [canvas5, ctx5] = createCanvas("canvas5")
 
 // global variables
 
-const grid = 80
+const grid = 42
 let keys = []
 let score = 0
 let collisionsCount = 0
@@ -29,15 +29,34 @@ var maxParticles = 300
 var ripplesArray = []
 var carsArray = []
 var logsArray = []
+var numberOfCars = 3
+var safe = false
 
-const background_lvl2 = new Image()
-background_lvl2.src = 'background_lvl2.png'
+function createImage(filename) {
+  const image = new Image()
+  image.src = `images/${filename}.png`
+  return image
+}
 
-const grass = new Image()
-background_lvl2.src = 'grass.png'
 
-const collision = new Image()
-background_lvl2.src = 'collisions.png'
+const background_lvl2 = createImage('background')
+
+const collision = createImage('collisions')
+
+const turtle = createImage('turtles')
+
+const bus = createImage('mta_bus')
+
+const bus_reverse = createImage('mta_bus_reverse')
+
+const cab = createImage('cab')
+
+const cab_reverse = createImage('cab_reverse')
+
+const log = createImage('log')
+
+const froggerSprite = createImage('frog_spritesheet')
+
 
 class KeyboardHandler {
   constructor() {
