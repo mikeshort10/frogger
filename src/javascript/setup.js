@@ -57,6 +57,15 @@ const log = createImage('log')
 
 const scabby = createImage('scabby')
 
+const execImages = {
+  exec1: createImage("exec1"),
+  exec2: createImage("exec2"),
+  exec3: createImage("exec3"),
+  exec4: createImage("exec4"),
+  exec5: createImage("exec5"),
+  exec6: createImage("exec6")
+}
+
 class KeyboardHandler {
   constructor() {
 
