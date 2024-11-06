@@ -1,3 +1,5 @@
+/** This is legacy code that adds dust particles begin the player's avatar as they move. We may use it again, but it is not implemented right now. */
+
 class Particle {
   constructor(x, y) {
     this.x = x

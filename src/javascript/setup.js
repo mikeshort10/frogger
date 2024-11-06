@@ -55,8 +55,7 @@ const cab_reverse = createImage('cab_reverse')
 
 const log = createImage('log')
 
-const froggerSprite = createImage('frog_spritesheet')
-
+const scabby = createImage('scabby')
 
 class KeyboardHandler {
   constructor() {
@@ -64,19 +63,19 @@ class KeyboardHandler {
   }
 
   static isLeftKey() {
-    return keys[37] === true
+    return (keys["ArrowLeft"] || keys["A"] || keys["a"]) === true
   }
 
   static isRightKey() {
-    return keys[39] === true
+    return (keys["ArrowRight"] || keys["D"] || keys["d"]) === true
   }
 
   static isUpKey() {
-    return keys[38] === true
+    return (keys["ArrowUp"] || keys["W"] || keys["w"]) === true
   }
 
   static isDownKey() {
-    return keys[40] === true
+    return (keys["ArrowDown"] || keys["W"] || keys["w"]) === true
   }
 
   static isKeyboardKey() {
