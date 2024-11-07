@@ -28,7 +28,6 @@ var particlesArray = []
 var maxParticles = 300
 var ripplesArray = []
 var carsArray = []
-var logsArray = []
 var numberOfCars = 3
 var safe = false
 var hiddenCallToAction = false
@@ -44,7 +43,6 @@ const background_lvl2 = createImage('background')
 
 const collision = createImage('collisions')
 
-const turtle = createImage('turtles')
 const bus = createImage('sbs_bus')
 
 const bus_reverse = createImage('sbs_bus_reverse')
@@ -52,8 +50,6 @@ const bus_reverse = createImage('sbs_bus_reverse')
 const cab = createImage('cab')
 
 const cab_reverse = createImage('cab_reverse')
-
-const log = createImage('log')
 
 const scabby = createImage('scabby')
 
