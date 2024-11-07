@@ -1,36 +1,36 @@
-const createCanvas = (id) => {
-  const canvas = document.getElementById(id)
-  const ctx = canvas.getContext("2d")
-  canvas.width = 600
-  canvas.height = 600
+class CanvasRenderer {
+  constructor(id, width = 600, height = 600) {
+    this.canvas = document.getElementById(id)
+    this.ctx = this.canvas.getContext("2d")
+    this.canvas.width = width
+    this.canvas.height = height
+  }
 
-  return [canvas, ctx]
+  drawImage({ x, y, width, height, image }) {
+    this.ctx.drawImage(image, x, y, width, height)
+  }
+
+  clear() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+
+  }
 }
 
-
-
-const [canvas1, ctx1] = createCanvas("canvas1")
-const [canvas2, ctx2] = createCanvas("canvas2")
-const [canvas3, ctx3] = createCanvas("canvas3")
-const [canvas4, ctx4] = createCanvas("canvas4")
-const [canvas5, ctx5] = createCanvas("canvas5")
+var layer1 = new CanvasRenderer("canvas1")
+var layer2 = new CanvasRenderer("canvas2")
+var layer3 = new CanvasRenderer("canvas3")
+var layer4 = new CanvasRenderer("canvas4")
+var layer5 = new CanvasRenderer("canvas5")
 
 // global variables
 
-const grid = 42
+var grid = 42
 let keys = []
 let score = 0
 let collisionsCount = 0
-let frame = 0
 let gameSpeed = 1
 
-var particlesArray = []
-var maxParticles = 300
-var ripplesArray = []
 var carsArray = []
-var logsArray = []
-var numberOfCars = 3
-var safe = false
 var hiddenCallToAction = false
 
 function createImage(filename) {
@@ -39,26 +39,21 @@ function createImage(filename) {
   return image
 }
 
+var background_lvl2 = createImage('background')
 
-const background_lvl2 = createImage('background')
+var collision = createImage('collisions')
 
-const collision = createImage('collisions')
+var bus = createImage('mta_bus')
 
-const turtle = createImage('turtles')
+var bus_reverse = createImage('mta_bus_reverse')
 
-const bus = createImage('mta_bus')
+var cab = createImage('cab')
 
-const bus_reverse = createImage('mta_bus_reverse')
+var cab_reverse = createImage('cab_reverse')
 
-const cab = createImage('cab')
+var scabby = createImage('scabby')
 
-const cab_reverse = createImage('cab_reverse')
-
-const log = createImage('log')
-
-const scabby = createImage('scabby')
-
-const execImages = {
+var execImages = {
   exec1: createImage("exec1"),
   exec2: createImage("exec2"),
   exec3: createImage("exec3"),
@@ -67,29 +62,5 @@ const execImages = {
   exec6: createImage("exec6")
 }
 
-class KeyboardHandler {
-  constructor() {
 
-  }
-
-  static isLeftKey() {
-    return (keys["ArrowLeft"] || keys["A"] || keys["a"]) === true
-  }
-
-  static isRightKey() {
-    return (keys["ArrowRight"] || keys["D"] || keys["d"]) === true
-  }
-
-  static isUpKey() {
-    return (keys["ArrowUp"] || keys["W"] || keys["w"]) === true
-  }
-
-  static isDownKey() {
-    return (keys["ArrowDown"] || keys["W"] || keys["w"]) === true
-  }
-
-  static isKeyboardKey() {
-    return KeyboardHandler.isRightKey() || KeyboardHandler.isLeftKey() || KeyboardHandler.isUpKey() || KeyboardHandler.isDownKey()
-  }
-}
 

@@ -1,81 +1,86 @@
-function animate() {
-  ctx1.clearRect(0, 0, canvas1.width, canvas1.height)
-  ctx2.clearRect(0, 0, canvas1.width, canvas1.height)
-  ctx3.clearRect(0, 0, canvas1.width, canvas1.height)
-  // ctx5.clearRect(0, 0, canvas1.width, canvas1.height)
 
+function animate(frogger, keyboardHandler) {
+  layer1.clear()
+  layer2.clear()
+  layer3.clear()
 
-  Particle.handleRipples(frogger)
+  layer2.drawImage({
+    image: background_lvl2,
+    x: 0,
+    y: 0,
+    width: layer1.canvas.width,
+    height: layer1.canvas.height
+  })
 
-  ctx2.drawImage(background_lvl2, 0, 0, canvas1.width, canvas1.height)
+  layer3.drawImage(frogger.getImageAttributes())
 
-  frogger.draw()
-  frogger.update()
-  // Particle.handleParticles(frogger)
-  Obstacle.handleObstacles()
-  handleScoreboard()
-  frame++
-  requestAnimationFrame(animate)
-}
-
-animate()
-
-window.addEventListener('keydown', function (e) {
-  keys = []
-  keys[e.key] = true
-  if (KeyboardHandler.isKeyboardKey()) {
-    frogger.jump()
+  console.log(keyboardHandler)
+  switch (true) {
+    case keyboardHandler.isUpKey():
+      frogger.moveUp()
+    case keyboardHandler.isDownKey():
+      frogger.moveDown()
+    case keyboardHandler.isLeftKey():
+      frogger.moveLeft()
+    case keyboardHandler.isRightKey():
+      frogger.moveRight()
   }
-})
 
-window.addEventListener('keyup', function (e) {
-  delete keys[e.key]
-  frogger.moving = false
-  frogger.frameX = 0
-})
+  if (frogger.isAtGoal()) {
+    score++;
+    gameSpeed += 0.05
+    frogger.reset()
+  }
 
-function scored() {
-  score++;
-  gameSpeed += 0.05
-  frogger.reset()
+  carsArray.forEach(car => {
+    car.update(gameSpeed)
+    layer2.drawImage(car.getImageDimensions())
+  })
+  const playerDimensions = frogger.getDimensions()
+  if (carsArray.some(Obstacle.collidesWith(playerDimensions))) {
+    layer5.ctx.drawImage(collision, 0, 100, 100, 100, playerDimensions.x, playerDimensions.y, 50, 50)
+    frogger.reset()
+    score = 0
+    collisionsCount++
+    gameSpeed = 1
+    if (hiddenCallToAction === false) {
+      showCallToAction()
+    }
+  }
+  handleScoreboard()
+  requestAnimationFrame(function () {
+    animate(frogger, keyboardHandler)
+  })
 }
 
 function handleScoreboard() {
-  ctx4.clearRect(0, 0, canvas4.width, canvas4.height)
-  ctx4.fillStyle = 'black'
-  ctx4.font = '15px Verdana'
-  ctx4.strokeText('Strikers', 2, 160)
-  ctx4.strokeText('on Picket', 2, 180)
-  ctx4.strokeText('Line', 2, 200)
-  ctx4.font = '60px Verdana'
-  ctx4.fillText(score, 2, 250)
-  ctx4.font = '15px Verdana'
-  ctx4.strokeText(`Collisions: ${collisionsCount}`, 2, 575)
-  ctx4.strokeText(`Game Speed: ${gameSpeed.toFixed(2)}`, 2, 595)
+  layer4.ctx.clearRect(0, 0, layer2.canvas.width, layer2.canvas.height)
+  layer4.ctx.fillStyle = 'black'
+  layer4.ctx.font = '15px Verdana'
+  layer4.ctx.strokeText('Strikers', 2, 160)
+  layer4.ctx.strokeText('on Picket', 2, 180)
+  layer4.ctx.strokeText('Line', 2, 200)
+  layer4.ctx.font = '60px Verdana'
+  layer4.ctx.fillText(score, 2, 250)
+  layer4.ctx.font = '15px Verdana'
+  layer4.ctx.strokeText(`Collisions: ${collisionsCount}`, 2, 575)
+  layer4.ctx.strokeText(`Game Speed: ${gameSpeed.toFixed(2)}`, 2, 595)
 }
 
-function collidesWith(first) {
-  return function $collidesWith(second) {
-    return !(first.x >= second.x + second.width || first.x + first.width <= second.x || first.y >= second.y + second.height || first.y + first.height <= second.y)
-  }
+function main() {
+  const keyboardHandler = new KeyboardHandler()
+  const frogger = new Frogger(scabby, layer1.canvas.width, layer1.canvas.height)
+  Obstacle.initObstacles(layer1.canvas.width, layer1.canvas.height)
+  animate(frogger, keyboardHandler)
+
+  window.addEventListener('keydown', function (e) {
+    keyboardHandler.setKey(e.key)
+  })
+
+  window.addEventListener('keyup', function (e) {
+    keyboardHandler.removeKey(e.key)
+    frogger.moving = false
+  })
 }
 
-function showCallToAction() {
-  document.getElementById("game-over").style.display = "initial"
-}
-
-function hideCallToAction() {
-  hiddenCallToAction = true
-  document.getElementById("game-over").style.display = "none"
-}
-
-function resetGame() {
-  frogger.reset()
-  score = 0
-  collisionsCount++
-  gameSpeed = 1
-  console.log(hiddenCallToAction)
-  if (hiddenCallToAction === false) {
-    showCallToAction()
-  }
-}
+main()

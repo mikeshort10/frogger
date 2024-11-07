@@ -1,20 +1,20 @@
 
 class Frogger {
-  constructor() {
-    this.spriteWidth = 250
-    this.spriteHeight = 250
+  constructor(image, canvasWidth, canvasHeight) {
+    this.image = image
+    this.canvasHeight = canvasHeight
+    this.canvasWidth = canvasWidth
+
     this.width = grid - 2
     this.height = grid - 2
 
-    this.startX = canvas1.width / 2 + 1
+    this.startX = canvasWidth / 2 + 1
     this.x = this.startX
 
-    this.startY = canvas1.height - this.height - 1
+    this.startY = canvasHeight - this.height - 1
     this.y = this.startY
 
     this.moving = false
-    this.frameX = 0
-    this.frameY = 0
   }
 
   reset() {
@@ -22,54 +22,71 @@ class Frogger {
     this.x = this.startX
   }
 
-  update() {
-    if (this.moving || KeyboardHandler.isKeyboardKey() === false) {
-      return
+  isNotMoving() {
+    return this.moving !== true
+  }
+
+  hasSpaceToMoveDown() {
+    return this.y < this.canvasHeight - this.height * 2
+  }
+
+  moveDown() {
+    if (this.isNotMoving() && this.hasSpaceToMoveDown()) {
+      this.moving = true
+      return this.y += (grid + 2)
     }
+  }
 
-    this.moving = true
+  hasSpaceToMoveUp() {
+    return true
+  }
 
-    if (KeyboardHandler.isUpKey()) {
+  moveUp() {
+    if (this.isNotMoving() && this.hasSpaceToMoveUp()) {
+      this.moving = true
       this.y -= (grid + 2)
-      this.frameX = 1
-      this.frameY = 0
-    } else if (KeyboardHandler.isDownKey()) {
-      if (this.y < canvas1.height - this.height * 2) {
-        this.y += (grid + 2)
-        this.frameY = 3
-
-      }
-    } else if (KeyboardHandler.isLeftKey()) {
-      if (this.x > this.width) {
-        this.x -= (grid + 2)
-        this.frameY = 2
-
-      }
-    } else if (KeyboardHandler.isRightKey()) {
-      if (this.x < canvas1.width - this.width * 2) {
-        this.x += (grid + 2)
-        this.frameY = 1
-
-      }
-    }
-
-    if (this.y < (grid * 5)) {
-      scored()
     }
   }
 
-  draw() {
-    ctx3.fillStyle = "green"
-    ctx3.drawImage(scabby, this.x, this.y, this.width, this.height)
+  hasSpaceToMoveLeft() {
+    return this.x > this.width
   }
 
-  jump() {
-    if (this.moving === false) {
-      this.frameX = 1
-    } else if (this.frameX === 1) {
-      this.frameX = 0
+  moveLeft() {
+    if (this.isNotMoving() && this.hasSpaceToMoveLeft()) {
+      this.moving = true
+      this.x -= (grid + 2)
     }
   }
+
+  hasSpaceToMoveRight() {
+    return this.x < this.canvasWidth - this.width * 2
+  }
+
+  moveRight() {
+    if (this.isNotMoving() && this.hasSpaceToMoveRight()) {
+      this.moving = true
+      this.x += (grid + 2)
+    }
+  }
+
+  getDimensions() {
+    return {
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      height: this.height,
+    }
+  }
+
+  getImageAttributes() {
+    return {
+      ...this.getDimensions(),
+      image: this.image,
+    }
+  }
+
+  jump() { }
 
   isOnStreet() {
     return this.y > 250
@@ -78,6 +95,8 @@ class Frogger {
   isOnSidewalk() {
     return this.isOnStreet() !== true && this.y > 100
   }
-}
 
-const frogger = new Frogger()
+  isAtGoal() {
+    return this.y < (grid * 5)
+  }
+}
