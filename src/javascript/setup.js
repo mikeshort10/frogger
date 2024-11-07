@@ -85,7 +85,7 @@ class KeyboardHandler {
   }
 
   static isDownKey() {
-    return (keys["ArrowDown"] || keys["W"] || keys["w"]) === true
+    return (keys["ArrowDown"] || keys["S"] || keys["s"]) === true
   }
 
   static isKeyboardKey() {
