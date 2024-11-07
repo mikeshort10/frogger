@@ -31,6 +31,7 @@ var carsArray = []
 var logsArray = []
 var numberOfCars = 3
 var safe = false
+var hiddenCallToAction = false
 
 function createImage(filename) {
   const image = new Image()
@@ -55,8 +56,16 @@ const cab_reverse = createImage('cab_reverse')
 
 const log = createImage('log')
 
-const froggerSprite = createImage('frog_spritesheet')
+const scabby = createImage('scabby')
 
+const execImages = {
+  exec1: createImage("exec1"),
+  exec2: createImage("exec2"),
+  exec3: createImage("exec3"),
+  exec4: createImage("exec4"),
+  exec5: createImage("exec5"),
+  exec6: createImage("exec6")
+}
 
 class KeyboardHandler {
   constructor() {
@@ -64,22 +73,23 @@ class KeyboardHandler {
   }
 
   static isLeftKey() {
-    return keys[37] === true
+    return (keys["ArrowLeft"] || keys["A"] || keys["a"]) === true
   }
 
   static isRightKey() {
-    return keys[39] === true
+    return (keys["ArrowRight"] || keys["D"] || keys["d"]) === true
   }
 
   static isUpKey() {
-    return keys[38] === true
+    return (keys["ArrowUp"] || keys["W"] || keys["w"]) === true
   }
 
   static isDownKey() {
-    return keys[40] === true
+    return (keys["ArrowDown"] || keys["W"] || keys["w"]) === true
   }
 
   static isKeyboardKey() {
     return KeyboardHandler.isRightKey() || KeyboardHandler.isLeftKey() || KeyboardHandler.isUpKey() || KeyboardHandler.isDownKey()
   }
 }
+

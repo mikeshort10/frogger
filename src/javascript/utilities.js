@@ -22,14 +22,14 @@ animate()
 
 window.addEventListener('keydown', function (e) {
   keys = []
-  keys[e.keyCode] = true
-  if (keys[37] || keys[38] || keys[39] || keys[49]) {
+  keys[e.key] = true
+  if (KeyboardHandler.isKeyboardKey()) {
     frogger.jump()
   }
 })
 
 window.addEventListener('keyup', function (e) {
-  delete keys[e.keyCode]
+  delete keys[e.key]
   frogger.moving = false
   frogger.frameX = 0
 })
@@ -44,12 +44,14 @@ function handleScoreboard() {
   ctx4.clearRect(0, 0, canvas4.width, canvas4.height)
   ctx4.fillStyle = 'black'
   ctx4.font = '15px Verdana'
-  ctx4.strokeText('Score', 10, 220)
+  ctx4.strokeText('Strikers', 2, 160)
+  ctx4.strokeText('on Picket', 2, 180)
+  ctx4.strokeText('Line', 2, 200)
   ctx4.font = '60px Verdana'
-  ctx4.fillText(score, 10, 270)
+  ctx4.fillText(score, 2, 250)
   ctx4.font = '15px Verdana'
-  ctx4.strokeText(`Collisions: ${collisionsCount}`, 0, 575)
-  ctx4.strokeText(`Game Speed: ${gameSpeed.toFixed(2)}`, 0, 595)
+  ctx4.strokeText(`Collisions: ${collisionsCount}`, 2, 575)
+  ctx4.strokeText(`Game Speed: ${gameSpeed.toFixed(2)}`, 2, 595)
 }
 
 function collidesWith(first) {
@@ -58,9 +60,22 @@ function collidesWith(first) {
   }
 }
 
+function showCallToAction() {
+  document.getElementById("game-over").style.display = "initial"
+}
+
+function hideCallToAction() {
+  hiddenCallToAction = true
+  document.getElementById("game-over").style.display = "none"
+}
+
 function resetGame() {
   frogger.reset()
   score = 0
   collisionsCount++
   gameSpeed = 1
+  console.log(hiddenCallToAction)
+  if (hiddenCallToAction === false) {
+    showCallToAction()
+  }
 }

@@ -1,39 +1,48 @@
 class Obstacle {
   constructor({ x, y, type, width = grid * 2, height = grid, speed = 1 }) {
-    const definitiveType = type !== 'vehicle' ? type : Math.random() > 0.5 ? 'cab' : 'bus'
     this.x = x
     this.y = y
     this.width = width
     this.height = height
     this.speed = speed
-    this.type = definitiveType
-    this.rect = null;
-    this.frameX = 0
-    this.frameY = 0
-    this.randomize = Math.floor(Math.random() * 30 + 30)
+    this.type = Obstacle.getType(type)
+    this.frameX = speed > 0 ? 0 : 1
+  }
+
+  static getExec() {
+    const pngs = ["exec1", "exec2", "exec3", "exec4", "exec5", "exec6"]
+    const png = Math.floor(Math.random() * pngs.length)
+    return pngs[png]
+  }
+
+
+  static getVehicle() {
+    const pngs = ["cab", "bus"]
+    const png = Math.floor(Math.random() * pngs.length)
+    return `${pngs[png]}${this.frameX === 0 ? "" : "_reverse"}`
+  }
+
+  static getType(type) {
+    switch (type) {
+      case "vehicle":
+        return Obstacle.getVehicle()
+      case "exec":
+        const execType = Obstacle.getExec()
+        return execType
+      default:
+        return type
+    }
   }
 
   draw() {
-
-    if (this.type === 'turtle') {
-      if (frame % this.randomize === 0) {
-
-
-        if (this.frameX >= 1) {
-          this.frameX = 0
-        } else {
-          this.frameX++
-        }
-      }
-      ctx1.drawImage(turtle, this.frameX * 70, this.frameY * 70, 70, 70, this.x, this.y, this.width, this.height)
-    } else if (this.type === 'log') {
-      ctx1.drawImage(log, this.x, this.y, this.width, this.height)
-    } else if (this.type === 'bus') {
+    if (this.type.startsWith('bus')) {
       const image = this.frameX === 0 ? bus : bus_reverse
       ctx2.drawImage(image, this.x, this.y, this.width, this.height)
-    } else if (this.type === 'cab') {
+    } else if (this.type.startsWith('cab')) {
       const image = this.frameX === 0 ? cab : cab_reverse
       ctx2.drawImage(image, this.x, this.y, this.width, this.height)
+    } else if (this.type.startsWith('exec')) {
+      ctx2.drawImage(execImages[this.type], this.x, this.y, this.width, this.height)
     }
   }
 
@@ -53,53 +62,81 @@ class Obstacle {
     return previousX
   }
   static initObstacles() {
-    // lane 1 
-    for (let i = 0; i < 2; i++) {
-      carsArray.push(new Obstacle({
-        x: i * 350,
-        y: canvas1.height - grid * 2 - 2,
+    const rows = [
+      // STREET
+      // lane 1
+      {
+        totalObstacles: 2,
+        xSpacing: 350,
+        heightBuffer: 2,
         type: 'vehicle'
-      }))
-    }
-
-    for (let i = 0; i < 2; i++) {
-      carsArray.push(new Obstacle({
-        x: i * 300,
-        y: canvas1.height - grid * 3 - 3,
+      },
+      // lane 2
+      {
+        totalObstacles: 2,
+        xSpacing: 300,
+        heightBuffer: 3,
         speed: -2,
         type: 'vehicle'
-      }))
-    }
+      },
+      // lane 3 
+      {
+        totalObstacles: 2,
 
-    for (let i = 0; i < 2; i++) {
-      carsArray.push(new Obstacle({
-        x: i * 400,
-        y: canvas1.height - grid * 4 - 4,
+        xSpacing: 400,
+        heightBuffer: 4,
         speed: 2,
         type: 'vehicle'
-
-      }))
-    }
-
-    for (let i = 0; i < 2; i++) {
-      carsArray.push(new Obstacle({
-        x: i * 400,
-        y: canvas1.height - grid * 5 - 5,
+      },
+      // lane 4
+      {
+        totalObstacles: 2,
+        xSpacing: 400,
+        heightBuffer: 5,
         speed: 1.5,
         type: 'vehicle'
-
-      }))
-    }
-
-    for (let i = 0; i < 3; i++) {
-      carsArray.push(new Obstacle({
-        x: i * 200,
-        y: canvas1.height - grid * 6 - 7,
+      },
+      // lane 5
+      {
+        totalObstacles: 2,
+        xSpacing: 200,
+        heightBuffer: 7,
         speed: -1,
         type: 'vehicle'
+      },
+      // SIDEWALK
+      // lane 6
+      {
+        totalObstacles: 5,
+        xSpacing: 200,
+        heightBuffer: 8,
+        speed: -1,
+        type: 'exec',
+        width: 25,
+        height: 25,
+      },
+      {
+        totalObstacles: 2,
+        xSpacing: 200,
+        heightBuffer: 9,
+        speed: 2,
+        type: 'exec',
+        width: 25,
+        height: 25,
+      }]
 
-      }))
-    }
+    rows.forEach((row, rowIndex) => {
+      for (let i = 0; i < row.totalObstacles; i++) {
+        carsArray.push(new Obstacle({
+          x: i * row.xSpacing,
+          y: canvas1.height - grid * (rowIndex + 2) - row.heightBuffer,
+          speed: row.speed,
+          type: row.type,
+          width: row.width,
+          height: row.height,
+        }))
+      }
+    })
   }
   static handleObstacles() {
     carsArray.forEach(car => {

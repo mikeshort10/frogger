@@ -60,8 +60,7 @@ class Frogger {
 
   draw() {
     ctx3.fillStyle = "green"
-    ctx3.fillRect(this.x, this.y, this.width, this.height)
-    // ctx3.drawImage(froggerSprite, this.frameX * this.spriteWidth, this.frameY * this.spriteHeight, this.spriteWidth, this.spriteHeight, this.x, this.y, this.width * 2, this.height * 2)
+    ctx3.drawImage(scabby, this.x, this.y, this.width, this.height)
   }
 
   jump() {
