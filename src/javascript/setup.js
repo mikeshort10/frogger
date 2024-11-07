@@ -28,7 +28,6 @@ var particlesArray = []
 var maxParticles = 300
 var ripplesArray = []
 var carsArray = []
-var logsArray = []
 var numberOfCars = 3
 var safe = false
 var hiddenCallToAction = false
@@ -44,17 +43,13 @@ const background_lvl2 = createImage('background')
 
 const collision = createImage('collisions')
 
-const turtle = createImage('turtles')
+const bus = createImage('sbs_bus')
 
-const bus = createImage('mta_bus')
-
-const bus_reverse = createImage('mta_bus_reverse')
+const bus_reverse = createImage('sbs_bus_reverse')
 
 const cab = createImage('cab')
 
 const cab_reverse = createImage('cab_reverse')
-
-const log = createImage('log')
 
 const scabby = createImage('scabby')
 
@@ -85,7 +80,7 @@ class KeyboardHandler {
   }
 
   static isDownKey() {
-    return (keys["ArrowDown"] || keys["W"] || keys["w"]) === true
+    return (keys["ArrowDown"] || keys["S"] || keys["s"]) === true
   }
 
   static isKeyboardKey() {
