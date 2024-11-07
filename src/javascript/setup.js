@@ -45,10 +45,9 @@ const background_lvl2 = createImage('background')
 const collision = createImage('collisions')
 
 const turtle = createImage('turtles')
+const bus = createImage('sbs_bus')
 
-const bus = createImage('mta_bus')
-
-const bus_reverse = createImage('mta_bus_reverse')
+const bus_reverse = createImage('sbs_bus_reverse')
 
 const cab = createImage('cab')
 
