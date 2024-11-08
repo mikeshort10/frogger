@@ -1,5 +1,7 @@
 # ny-frogger
 
+!!!! THIS PROJECT HAS BEEN MOVED TO https://github.com/newsguildny/guild-builds !!!!
+
 # Frogger
 
 Please join us on Slack at [#ny-frogger](https://nyttechguild.slack.com/archives/C07V5DBJ4SV)!
